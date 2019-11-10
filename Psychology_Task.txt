@@ -1,0 +1,8 @@
++ for .5
+stimuli for up to 1.5
+Too slow if not within 1.5
+
+display 1,0 or correct or incorrect .5
+
+4
+
