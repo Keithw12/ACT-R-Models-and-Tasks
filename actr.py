@@ -600,7 +600,7 @@ def start_hand_at_mouse ():
     return current_connection.evaluate_single("start-hand-at-mouse")
 	
 def delete_event(event_id):
-   return current_connection.evaluate(“delete-event”, event_id)
+	return current_connection.evaluate(“delete-event”, event_id)
 
 def schedule_event (time, action, params=None, module=':NONE', priority=0, maintenance=False, destination=None, details=None,output=True,time_in_ms=False,precondition=None):
     return current_connection.evaluate_single("schedule-event",time,action,[["params", params],["module", module],
