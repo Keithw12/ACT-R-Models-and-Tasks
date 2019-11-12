@@ -1,1 +1,1 @@
-cmd /k "cd C:\Users\Keith\Documents\GitHub\ACT-R-Models-and-Tasks"
+cmd /k "cd C:\ACT-R\tutorial\python"
