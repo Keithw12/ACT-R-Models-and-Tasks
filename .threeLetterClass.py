@@ -7,18 +7,13 @@ Created on Sun Nov 10 14:19:44 2019
 
 import actr
 
-actr.load_act_r_model("ACT-R:tutorial;unit2;dummy.lisp")
-
 def respond_to_key_press(model, key):
-    
     t1.response[-1] = key
-    #actr.schedule_event_
-               
-               
+
     if t1.isHuman == True:
         t1.remove_three_letters()
-        #t1.generate_three_letters()
-        #t1.display_three_letters()
+        t1.generate_three_letters()
+        t1.display_three_letters()
     
 class TaskVars:
     def __init__(self):
@@ -48,7 +43,6 @@ class TaskVars:
         actr.add_command("unit2-key-press",respond_to_key_press,
                          "Assignment 2 task output-key monitor")
         actr.monitor_command("output-key","unit2-key-press")
-        self.window = actr.open_exp_window("Leter difference task")
         
     def generate_three_letters(self):
         items = actr.permute_list(["B","C","D","F","G","H","J","K","L",
@@ -56,6 +50,7 @@ class TaskVars:
                                    "X","Y","Z"])
         self.letterDict["target"] = items[0]
         foil = items[1]
+        self.window = actr.open_exp_window("Leter difference task")
         self.letterDict["t1"] = foil
         self.letterDict["t2"] = foil
         self.letterDict["t3"] = foil
@@ -84,38 +79,31 @@ class TaskVars:
     def remove_three_letters(self):
         actr.remove_items_from_exp_window(self.window,*list(self.textIdDict.values()))
 
-def test_func():
-    print("TEST")
-
 def experiment(human=False):
     t1.isHuman = human
     
     t1.experiment_initialization()
     
-    
     t1.generate_three_letters()
     
-    print("schedule_event=",actr.schedule_event(.1,"add-text-to-exp-window",[None,'+',{"x": 150,"y":150}]))
-    
-    #t1.display_three_letters()
+    t1.display_three_letters()
     
     t1.response.append('')
     
     if human == True:
         while t1.response[-1] == '':
-            actr.process_events()   #<-- process_events() doesn't block
+            actr.process_events()   #<-- process_events() doesn't ever block
     else:
         actr.install_device(t1.window)
-        actr.run(1,True)            #<-- run() blocks
+        actr.run(10,True)
         
     if t1.response[-1].lower() == t1.letterDict["target"].lower():
         t1.result.append(True)
     else:
         t1.result.append(False)
     
-    #print(str([t1.window,' ','+',' ',150,' ',150]))
-    #print(*list(t1.textIdDict.values()))
-    
+    print(t1.textIdDict.values())
+    print(*list(t1.textIdDict.values()))
     #t1.remove_three_letters()
     
     t1.experiment_cleanup()
