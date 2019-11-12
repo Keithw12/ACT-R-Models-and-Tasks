@@ -10,13 +10,12 @@ import actr
 actr.load_act_r_model("ACT-R:tutorial;unit2;dummy.lisp")
 
 def respond_to_key_press(model, key):
-    
     t1.response[-1] = key
-    #actr.schedule_event_
+    
                
                
-    if t1.isHuman == True:
-        t1.remove_three_letters()
+    #if t1.isHuman == True:
+        #t1.remove_three_letters()
         #t1.generate_three_letters()
         #t1.display_three_letters()
     
@@ -73,6 +72,8 @@ class TaskVars:
         self.textIdDict["textid1"] = actr.add_text_to_exp_window(self.window, self.letterDict["t1"], x=125, y=75)
         self.textIdDict["textid2"] = actr.add_text_to_exp_window(self.window, self.letterDict["t2"], x=75, y=175)
         self.textIdDict["textid3"] = actr.add_text_to_exp_window(self.window, self.letterDict["t3"], x=175, y=175)
+        self.generate_three_letters()
+        actr.schedule_event(3,"remove-items-from-exp-window",[None,*list(self.textIdDict.values())])
         
    # def schedule_no_response():
         
@@ -84,9 +85,9 @@ class TaskVars:
     def remove_three_letters(self):
         actr.remove_items_from_exp_window(self.window,*list(self.textIdDict.values()))
 
-def test_func():
-    print("TEST")
-
+    #def schedule_letter_deletion(self):
+            #actr.schedule_event(3,"remove-items-from-exp-window",[None,*list(self.textIdDict.values())])
+    
 def experiment(human=False):
     t1.isHuman = human
     
@@ -95,9 +96,9 @@ def experiment(human=False):
     
     t1.generate_three_letters()
     
-    print("schedule_event=",actr.schedule_event(.1,"add-text-to-exp-window",[None,'+',{"x": 150,"y":150}]))
-    
-    #t1.display_three_letters()
+    #print("schedule_event=",actr.schedule_event(.1,"add-text-to-exp-window",[None,'+',{"x": 150,"y":150}]))
+    t1.display_three_letters()
+
     
     t1.response.append('')
     
@@ -106,7 +107,7 @@ def experiment(human=False):
             actr.process_events()   #<-- process_events() doesn't block
     else:
         actr.install_device(t1.window)
-        actr.run(1,True)            #<-- run() blocks
+        actr.run(5,True)            #<-- run() blocks
         
     if t1.response[-1].lower() == t1.letterDict["target"].lower():
         t1.result.append(True)
