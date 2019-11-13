@@ -471,6 +471,11 @@ def clear_exp_window(win=None):
 def open_exp_window(title,visible=True,width=300,height=300,x=300,y=300):
     return current_connection.evaluate_single("open-exp-window", title, [["visible", visible], ["width", width],
                                                                          ["height", height], ["x", x], ["y", y]])
+																		 
+def modify_text_for_exp_window(textid,text="Test",x=0,y=0,color='black',height=20,width=75,font_size=12):
+    return current_connection.evaluate_single("modify-text-for-exp-window", textid,[["text", text],["color", color], ["width", width],
+                                                                                      ["height", height], ["x", x], ["y", y], 
+                                                                                      ["font-size", font_size]])																		 
 
 def add_text_to_exp_window(window,text,x=0,y=0,color='black',height=20,width=75,font_size=12):
     return current_connection.evaluate_single("add-text-to-exp-window", window, text,[["color", color], ["width", width],
