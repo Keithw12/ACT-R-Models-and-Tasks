@@ -11,7 +11,16 @@ actr.load_act_r_model("ACT-R:tutorial;unit2;dummy.lisp")
 
 def respond_to_key_press(model, key):
     t1.response[-1] = key
-    
+    if t1.response[-1].lower() == t1.letterDict["target"].lower():
+        t1.result.append(True)
+    else:
+        t1.result.append(False)
+         
+    t1.generate_three_letters()           
+    actr.clear_exp_window()
+    t1.display_three_letters()
+    #actr.modify_line_for_exp_window(t1.textIdDict[0],text="MyText")   <--not working, can we output the remote call log in actr lisp interp to see the arguments?
+    #actr.schedule_event(3,"modify-text-for-exp-window",[None,*list(t1.textIdDict.values())])
                
                
     #if t1.isHuman == True:
@@ -72,8 +81,8 @@ class TaskVars:
         self.textIdDict["textid1"] = actr.add_text_to_exp_window(self.window, self.letterDict["t1"], x=125, y=75)
         self.textIdDict["textid2"] = actr.add_text_to_exp_window(self.window, self.letterDict["t2"], x=75, y=175)
         self.textIdDict["textid3"] = actr.add_text_to_exp_window(self.window, self.letterDict["t3"], x=175, y=175)
-        self.generate_three_letters()
-        actr.schedule_event(3,"remove-items-from-exp-window",[None,*list(self.textIdDict.values())])
+        #self.generate_three_letters()
+        #actr.schedule_event(3,"remove-items-from-exp-window",[None,*list(self.textIdDict.values())])
         
    # def schedule_no_response():
         
@@ -96,7 +105,9 @@ def experiment(human=False):
     
     t1.generate_three_letters()
     
+    #you can pass optional parameters as a list of sublists, or as a dictionary.
     #print("schedule_event=",actr.schedule_event(.1,"add-text-to-exp-window",[None,'+',{"x": 150,"y":150}]))
+    #print("schedule_event=",actr.schedule_event(.1,"add-text-to-exp-window",[None,'+',[["x",150],["y",150]]]))
     t1.display_three_letters()
 
     
@@ -109,10 +120,10 @@ def experiment(human=False):
         actr.install_device(t1.window)
         actr.run(5,True)            #<-- run() blocks
         
-    if t1.response[-1].lower() == t1.letterDict["target"].lower():
-        t1.result.append(True)
-    else:
-        t1.result.append(False)
+    #if t1.response[-1].lower() == t1.letterDict["target"].lower():
+    #    t1.result.append(True)
+    #else:
+    #    t1.result.append(False)
     
     #print(str([t1.window,' ','+',' ',150,' ',150]))
     #print(*list(t1.textIdDict.values()))
