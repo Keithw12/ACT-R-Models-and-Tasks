@@ -16,9 +16,9 @@ def respond_to_key_press(model, key):
     else:
         t1.result.append(False)
          
-    t1.generate_three_letters()           
-    actr.clear_exp_window()
-    t1.display_three_letters()
+    #t1.generate_three_letters()           
+    #actr.clear_exp_window()
+    #t1.display_three_letters()
     #actr.modify_line_for_exp_window(t1.textIdDict[0],text="MyText")   <--not working, can we output the remote call log in actr lisp interp to see the arguments?
     #actr.schedule_event(3,"modify-text-for-exp-window",[None,*list(t1.textIdDict.values())])
                
@@ -50,6 +50,7 @@ class TaskVars:
                 #"focusid": '',
                 #"shockid": ''
                 }
+        self.eventId = []
         
     def experiment_initialization(self):
         actr.reset()
@@ -109,8 +110,11 @@ def experiment(human=False):
     #print("schedule_event=",actr.schedule_event(.1,"add-text-to-exp-window",[None,'+',{"x": 150,"y":150}]))
     #print("schedule_event=",actr.schedule_event(.1,"add-text-to-exp-window",[None,'+',[["x",150],["y",150]]]))
     t1.display_three_letters()
-
+    #t1.eventId.append(actr.schedule_event(1.5,"clear-exp-window"))
+    #t1.eventId.append(actr.schedule_event(1.5))
     
+    print("modify_text_for_exp_window=",actr.schedule_event(3,"modify-text-for-exp-window",[t1.textIdDict["textid1"],{"text":"TEST"}]))
+    actr.mp_show_queue()
     t1.response.append('')
     
     if human == True:
@@ -118,7 +122,7 @@ def experiment(human=False):
             actr.process_events()   #<-- process_events() doesn't block
     else:
         actr.install_device(t1.window)
-        actr.run(5,True)            #<-- run() blocks
+        actr.run(1,True)            #<-- run() blocks
         
     #if t1.response[-1].lower() == t1.letterDict["target"].lower():
     #    t1.result.append(True)
