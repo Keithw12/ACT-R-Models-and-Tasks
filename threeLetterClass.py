@@ -52,6 +52,7 @@ class TaskVars:
                 }
         self.eventId = []
         
+        
     def experiment_initialization(self):
         actr.reset()
         actr.add_command("unit2-key-press",respond_to_key_press,
